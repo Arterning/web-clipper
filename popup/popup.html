@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Web Clipper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Web Clipper</h1>
+    <div class="controls">
+      <button id="clipButton">裁剪当前页面</button>
+      <button id="copyButton">复制到剪贴板</button>
+      <button id="saveButton">保存为文件</button>
+    </div>
+    <div class="preview-container">
+      <h3>预览:</h3>
+      <textarea id="contentPreview" readonly></textarea>
+    </div>
+    <div class="options">
+      <label>
+        <input type="checkbox" id="includeUrl"> 包含页面URL
+      </label>
+      <label>
+        <input type="checkbox" id="includeTitle"> 包含页面标题
+      </label>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
