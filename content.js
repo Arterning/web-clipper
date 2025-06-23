@@ -10,18 +10,28 @@ function getPageContent() {
     // 克隆元素以避免修改原始页面
     const clonedElement = contentElement.cloneNode(true);
     
-    // 处理图片 - 只保留链接
+    // 处理图片 - 转换为Markdown格式（增强版）
     const images = clonedElement.querySelectorAll('img');
     images.forEach(img => {
-      const src = img.src || img.getAttribute('data-src');
-      if (src) {
-        const link = document.createElement('a');
-        link.href = src;
-        link.textContent = `[图片: ${src}]`;
-        img.parentNode.replaceChild(link, img);
-      } else {
-        img.remove();
-      }
+    const src = img.src || img.getAttribute('data-src') || '';
+    const alt = img.alt || img.getAttribute('title') || '';
+    const width = img.width || img.getAttribute('width') || '';
+    const height = img.height || img.getAttribute('height') || '';
+    
+        if (src) {
+            // 基础Markdown图片语法
+            let mdImage = `![${alt}](${src})`;
+            
+            // 可选：添加尺寸信息作为HTML属性（兼容某些Markdown解析器）
+            if (width || height) {
+            mdImage += `{ width=${width}${height ? ` height=${height}` : ''} }`;
+            }
+            
+            const mdNode = document.createTextNode(mdImage + '\n\n'); // 添加换行使图片更清晰
+            img.parentNode.replaceChild(mdNode, img);
+        } else {
+            img.remove();
+        }
     });
     
     // 处理其他媒体元素
